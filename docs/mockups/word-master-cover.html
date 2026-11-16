@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1200px;height:1500px;overflow:hidden}
+  body{
+    background:#F5F1E8;
+    color:#1D1C19;
+    font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+    -webkit-font-smoothing:antialiased;
+    position:relative;
+  }
+  .paper-grain{
+    position:absolute;inset:0;pointer-events:none;opacity:.55;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='180' height='180' filter='url(%23n)' opacity='.055'/></svg>");
+  }
+  .frame{position:absolute;inset:0;padding:84px 84px 70px;display:flex;flex-direction:column}
+  .top{display:flex;justify-content:space-between;align-items:baseline}
+  .eyebrow{font:500 15px/1 "Consolas","SFMono-Regular",monospace;letter-spacing:.18em;color:#6E6A5F;text-transform:uppercase}
+  .eyebrow b{color:#C05B3C;font-weight:500}
+  .year{font:400 14px/1 "Consolas","SFMono-Regular",monospace;letter-spacing:.12em;color:#6E6A5F}
+
+  .head{position:relative;margin-top:92px;padding-left:40px}
+  .spine{position:absolute;left:0;top:8px;width:1px;height:548px;background:#CEC6B6}
+  .spine::before{content:"";position:absolute;left:0;top:0;width:12px;height:1px;background:#C05B3C}
+  .kicker{font:500 14px/1 "Consolas",monospace;letter-spacing:.2em;color:#C05B3C}
+  h1{font-family:"Noto Serif SC","Songti SC","SimSun",serif;font-weight:600;font-size:196px;line-height:.95;letter-spacing:.02em;margin-top:26px}
+  .sub{margin-top:22px;font-family:"Noto Serif SC","Songti SC",serif;font-size:56px;letter-spacing:.28em;color:#56534B}
+  .lead{margin-top:34px;font-size:24px;line-height:1.85;color:#56534B;max-width:660px}
+  .lead em{font-style:normal;color:#9C4527}
+
+  .stack{position:relative;margin-top:70px;height:446px}
+  .sheet{position:absolute;left:0;right:0;height:408px;background:#FBF8F1;border:1px solid #E1DBCE}
+  .sheet.back1{transform:translate(18px,18px) rotate(1.4deg);background:#EFE9DD;border-color:#DCD4C4}
+  .sheet.back2{transform:translate(36px,36px) rotate(2.8deg);background:#E9E2D4;border-color:#D5CCBB}
+  .card{position:absolute;left:0;right:0;top:0;height:408px;background:#FBF8F1;border:1px solid #CEC6B6;transform:rotate(-.7deg);padding:44px 50px 38px;box-shadow:0 24px 60px rgba(35,33,28,.07)}
+  .card-top{display:flex;justify-content:space-between;align-items:flex-start}
+  .word{font-family:"Noto Serif SC","Songti SC",serif;font-size:92px;line-height:1;letter-spacing:-.01em}
+  .phonetic{margin-top:16px;font:400 21px/1 "Consolas",monospace;color:#6E6A5F;letter-spacing:.02em}
+  .badge{font:500 12px/1 "Consolas",monospace;letter-spacing:.14em;color:#9C4527;border:1px solid #E7C9B9;background:#F7EDE4;padding:9px 12px;white-space:nowrap}
+  .rule{height:1px;background:#E1DBCE;margin:32px 0 24px}
+  .prompt{font:400 14px/1 "Consolas",monospace;letter-spacing:.1em;color:#6E6A5F}
+  .opts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+  .opt{display:flex;align-items:center;gap:14px;border:1px solid #E1DBCE;background:#F8F4EA;padding:17px 18px;font-size:20px;color:#3F3C35}
+  .opt span{font:400 13px/1 "Consolas",monospace;color:#8A8578;letter-spacing:.08em}
+  .opt.active{background:#A94C30;border-color:#A94C30;color:#FBF8F1}
+  .opt.active span{color:#F0D9CD}
+
+  .bottom{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;border-top:1px solid #D8D0C0;padding-top:26px}
+  .tags{display:flex;gap:10px;flex-wrap:wrap}
+  .tag{font:400 13px/1 "Consolas",monospace;letter-spacing:.06em;color:#56534B;border:1px solid #D8D0C0;padding:9px 11px;background:rgba(251,248,241,.6)}
+  .repo{text-align:right;font:400 13px/1.8 "Consolas",monospace;color:#6E6A5F;letter-spacing:.03em}
+  .repo b{display:block;color:#1D1C19;font-weight:500}
+</style>
+</head>
+<body>
+<div class="paper-grain"></div>
+<div class="frame">
+  <div class="top">
+    <div class="eyebrow"><b>Project 06</b> / Web App</div>
+    <div class="year">2026 · PWA</div>
+  </div>
+
+  <div class="head">
+    <div class="spine"></div>
+    <div class="kicker">VOCABULARY, OFFLINE</div>
+    <h1>词芽</h1>
+    <div class="sub">背单词</div>
+    <p class="lead">把 11,789 个词条装进口袋，<br>再把每天的学习，拆成<em>一小轮</em>。</p>
+  </div>
+
+  <div class="stack">
+    <div class="sheet back2"></div>
+    <div class="sheet back1"></div>
+    <div class="card">
+      <div class="card-top">
+        <div>
+          <div class="word">abandon</div>
+          <div class="phonetic">/əˈbændən/</div>
+        </div>
+        <div class="badge">CET-4 · 01 / 20</div>
+      </div>
+      <div class="rule"></div>
+      <div class="prompt">选择正确的中文释义</div>
+      <div class="opts">
+        <div class="opt"><span>A</span> 增加；添加</div>
+        <div class="opt active"><span>B</span> 放弃；抛弃</div>
+        <div class="opt"><span>C</span> 到达；抵达</div>
+        <div class="opt"><span>D</span> 借用；借入</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom">
+    <div class="tags">
+      <div class="tag">11,789 词条</div>
+      <div class="tag">4 种题型</div>
+      <div class="tag">离线可用</div>
+      <div class="tag">错题复习</div>
+    </div>
+    <div class="repo"><b>axv0805-beep / word-master</b>github.com</div>
+  </div>
+</div>
+</body>
+</html>

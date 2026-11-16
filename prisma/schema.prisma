@@ -1,0 +1,142 @@
+// 留白集 · 数据模型
+// 本地单机 SQLite；时间统一存 UTC，展示按 Asia/Shanghai。
+// 说明：为让 `pnpm db:migrate` 开箱即用，数据库路径直接写在 schema 里；
+// 部署到其他环境时改这一行，或在 prisma.config.ts 中覆盖。
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:../data/dev.db"
+}
+
+model User {
+  id           String   @id @default(cuid())
+  username     String   @unique
+  passwordHash String
+  displayName  String
+  role         String   @default("admin")
+  sessionEpoch Int      @default(0) @map("session_epoch")
+  lastLoginAt  DateTime? @map("last_login_at")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  media     Media[]
+  auditLogs AuditLog[]
+
+  @@map("users")
+}
+
+model SiteProfile {
+  id           Int      @id @default(1)
+  siteName     String   @default("留白集") @map("site_name")
+  siteNameEn   String?  @default("LIUBAI") @map("site_name_en")
+  ownerName    String   @map("owner_name")
+  roleLine     String   @map("role_line")
+  heroEyebrow  String   @map("hero_eyebrow")
+  tagline      String
+  bio          String
+  avatarUrl    String?  @map("avatar_url")
+  email        String
+  location     String?
+  availability String   @default("开放合作")
+  socials      Json
+  footerNote   String   @map("footer_note")
+  aboutTools   Json     @map("about_tools")
+  timeline     Json
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("site_profile")
+}
+
+model Category {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  nameEn      String   @map("name_en")
+  description String   @default("")
+  sortOrder   Int      @default(0) @map("sort_order")
+  isVisible   Boolean  @default(true) @map("is_visible")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  works Work[]
+
+  @@index([isVisible, sortOrder])
+  @@map("categories")
+}
+
+model Work {
+  id          String    @id @default(cuid())
+  categoryId  String    @map("category_id")
+  title       String
+  slug        String    @unique
+  summary     String    @default("")
+  coverUrl    String    @map("cover_url")
+  coverAlt    String    @default("") @map("cover_alt")
+  featuredCoverUrl String? @map("featured_cover_url")
+  year        Int
+  tools       Json
+  tags        Json
+  role        String?
+  client      String?
+  status      String    @default("draft")
+  isFeatured  Boolean   @default(false) @map("featured")
+  sortOrder   Int       @default(0) @map("sort_order")
+  content     Json
+  viewCount   Int       @default(0) @map("view_count")
+  publishedAt DateTime? @map("published_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+
+  @@index([status, publishedAt])
+  @@index([categoryId, sortOrder])
+  @@index([isFeatured, sortOrder])
+  @@index([updatedAt])
+  @@map("works")
+}
+
+model Media {
+  id           String   @id @default(cuid())
+  url          String   @unique
+  storageKey   String   @unique @map("storage_key")
+  originalName String   @map("original_name")
+  mime         String
+  size         Int
+  width        Int?
+  height       Int?
+  createdAt    DateTime @default(now()) @map("created_at")
+  createdBy    String?  @map("created_by")
+
+  creator User? @relation(fields: [createdBy], references: [id], onDelete: SetNull)
+
+  @@index([createdAt])
+  @@map("media")
+}
+
+model Setting {
+  key       String   @id
+  value     Json
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("settings")
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  actorId    String?  @map("actor_id")
+  action     String
+  entityType String   @map("entity_type")
+  entityId   String?  @map("entity_id")
+  meta       Json
+  ip         String?
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  actor User? @relation(fields: [actorId], references: [id], onDelete: SetNull)
+
+  @@map("audit_logs")
+}

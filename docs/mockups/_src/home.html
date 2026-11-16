@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>留白集 · 首页效果图</title>
+<style>
+  :root{
+    --paper:#F5F1E8;
+    --paper-deep:#EDE7DB;
+    --surface:#FBF8F1;
+    --surface-2:#F0EBE0;
+    --ink:#1D1C19;
+    --ink-2:#56534B;
+    --ink-3:#6E6A5F;
+    --line:#E1DBCE;
+    --line-strong:#CEC6B6;
+    --accent:#C05B3C;
+    --accent-strong:#A94C30;
+    --accent-ink:#9C4527;
+    --deep:#23211C;
+    --on-deep:#F4EFE5;
+    --on-deep-2:#BDB6A8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  body{
+    width:1440px;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+    font-size:16px;
+    line-height:1.75;
+    font-feature-settings:"tnum";
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  .container{width:1200px;margin:0 auto}
+  .mono{font-family:Consolas,"SFMono-Regular",Menlo,monospace;letter-spacing:.08em}
+  .serif{font-family:"Noto Serif SC","Songti SC","SimSun",serif}
+
+  /* paper grain */
+  .grain{
+    position:fixed;inset:0;z-index:80;pointer-events:none;opacity:.045;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+  }
+
+  /* header */
+  .site-header{height:96px;border-bottom:1px solid var(--line)}
+  .site-header .container{height:100%;display:flex;align-items:center;justify-content:space-between}
+  .brand{display:flex;align-items:center;gap:14px}
+  .brand-mark{width:1px;height:24px;background:var(--ink);position:relative;flex:none}
+  .brand-mark::before{content:"";position:absolute;left:0;top:0;width:6px;height:1px;background:var(--accent)}
+  .brand-mark::after{content:"";position:absolute;left:0;bottom:0;width:6px;height:1px;background:var(--line-strong)}
+  .brand-cn{font-family:"Noto Serif SC","Songti SC","SimSun",serif;font-size:24px;letter-spacing:.16em;line-height:1;padding-left:2px}
+  .brand-en{font-family:Consolas,monospace;font-size:10px;letter-spacing:.26em;color:var(--ink-3);padding-top:4px}
+  .nav{display:flex;align-items:center;gap:42px;font-size:13px;color:var(--ink-2);letter-spacing:.02em}
+  .nav a{position:relative;padding:4px 0}
+  .nav a.active{color:var(--ink)}
+  .nav a.active::after{content:"";position:absolute;left:0;right:0;bottom:-7px;height:1px;background:var(--accent)}
+  .header-note{font-family:Consolas,monospace;font-size:10px;letter-spacing:.2em;color:var(--ink-3)}
+
+  /* hero */
+  .hero{padding:80px 0 72px;border-bottom:1px solid var(--line)}
+  .hero .container{display:grid;grid-template-columns:7fr 5fr;gap:72px;align-items:center}
+  .hero-left{position:relative;padding-left:52px;min-height:620px;display:flex;align-items:center}
+  .spine{position:absolute;left:0;top:64px;bottom:64px;width:1px;background:var(--line-strong)}
+  .spine::before{content:"";position:absolute;left:0;top:0;width:12px;height:1px;background:var(--accent)}
+  .spine::after{content:"";position:absolute;left:0;bottom:0;width:6px;height:1px;background:var(--line-strong)}
+  .eyebrow{font-family:Consolas,monospace;font-size:11px;letter-spacing:.22em;color:var(--accent-ink);margin-bottom:26px}
+  h1{font-family:"Noto Serif SC","Songti SC","SimSun",serif;font-size:96px;font-weight:500;line-height:1;letter-spacing:.08em;margin-left:-5px}
+  .role{font-size:17px;color:var(--ink-2);margin-top:28px;letter-spacing:.04em}
+  .tagline{font-size:20px;line-height:1.85;color:var(--ink-2);margin-top:16px;max-width:22em}
+  .actions{display:flex;align-items:center;gap:30px;margin-top:40px}
+  .btn-primary{
+    display:inline-flex;align-items:center;gap:14px;height:48px;padding:0 24px;
+    background:var(--accent-strong);color:#fff;font-size:13px;letter-spacing:.04em;border-radius:2px;
+  }
+  .btn-primary span{font-family:Consolas,monospace;font-size:14px;line-height:1}
+  .btn-text{font-size:13px;color:var(--ink);border-bottom:1px solid var(--line-strong);padding-bottom:5px;letter-spacing:.04em}
+  .btn-text span{margin-left:8px;font-family:Consolas,monospace;color:var(--accent-ink)}
+  .hero-meta{display:flex;align-items:center;gap:12px;margin-top:54px;font-family:Consolas,monospace;font-size:10.5px;letter-spacing:.1em;color:var(--ink-3)}
+  .hero-meta .dot{color:var(--line-strong)}
+  .hero-meta .status{color:var(--accent-ink)}
+  .hero-right{width:100%}
+  .hero-art{position:relative;width:100%;aspect-ratio:4/5;overflow:hidden;border:1px solid var(--line-strong);background:var(--paper-deep)}
+  .hero-art svg{display:block;width:100%;height:100%}
+  .hero-caption{display:flex;justify-content:space-between;margin-top:14px;font-family:Consolas,monospace;font-size:10px;letter-spacing:.12em;color:var(--ink-3)}
+  .hero-caption .accent{color:var(--accent-ink)}
+
+  /* section head */
+  .section{padding:80px 0 88px;border-bottom:1px solid var(--line)}
+  .section-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:28px}
+  .head-left{display:flex;align-items:baseline;gap:18px}
+  .section-index{font-family:Consolas,monospace;font-size:10.5px;letter-spacing:.18em;color:var(--ink-3);transform:translateY(-4px)}
+  h2{font-family:"Noto Serif SC","Songti SC","SimSun",serif;font-size:40px;font-weight:500;letter-spacing:.1em;line-height:1.2}
+  .section-note{font-family:Consolas,monospace;font-size:10.5px;letter-spacing:.08em;color:var(--ink-3)}
+
+  /* directory */
+  .dir-list{border-top:1px solid var(--line-strong)}
+  .dir-row{display:grid;grid-template-columns:64px 240px 1fr 72px 28px;align-items:center;height:88px;border-bottom:1px solid var(--line)}
+  .dir-row .num{font-family:Consolas,monospace;font-size:10.5px;letter-spacing:.1em;color:var(--ink-3)}
+  .dir-row .name{font-family:"Noto Serif SC","Songti SC","SimSun",serif;font-size:24px;letter-spacing:.06em}
+  .dir-row .desc{font-size:13px;color:var(--ink-2);letter-spacing:.02em}
+  .dir-row .count{font-family:Consolas,monospace;font-size:11px;color:var(--ink-3);text-align:right}
+  .dir-row .arrow{font-family:Consolas,monospace;font-size:15px;color:var(--ink-3);text-align:right}
+
+  /* featured */
+  .featured{padding:80px 0 96px;border-bottom:1px solid var(--line)}
+  .all-link{font-family:Consolas,monospace;font-size:10.5px;letter-spacing:.08em;color:var(--ink-3);border-bottom:1px solid var(--line-strong);padding-bottom:4px}
+  .feature-grid{display:grid;grid-template-columns:7fr 5fr;grid-template-rows:1fr 1fr;gap:24px;height:640px}
+  .work{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);overflow:hidden}
+  .work-large{grid-row:span 2}
+  .work-media{position:relative;overflow:hidden;background:var(--paper-deep)}
+  .work-large .work-media{flex:1}
+  .work-small .work-media{height:196px}
+  .work-media svg{display:block;width:100%;height:100%}
+  .work-info{display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;column-gap:16px;row-gap:2px;padding:18px 20px 16px;border-top:1px solid var(--line);background:var(--surface)}
+  .work-large .work-info{padding:22px 24px 20px}
+  .work-title{grid-column:1;grid-row:1;font-family:"Noto Serif SC","Songti SC","SimSun",serif;font-size:26px;font-weight:500;letter-spacing:.05em;line-height:1.3}
+  .work-small .work-title{font-size:21px}
+  .work-meta{grid-column:1;grid-row:2;font-family:Consolas,monospace;font-size:10px;letter-spacing:.1em;color:var(--ink-3)}
+  .work-arrow{grid-column:2;grid-row:1 / span 2;align-self:center;font-family:Consolas,monospace;font-size:17px;color:var(--ink-3)}
+  .work-no{position:absolute;top:16px;left:16px;z-index:2;font-family:Consolas,monospace;font-size:10px;letter-spacing:.12em;color:var(--ink-2);background:rgba(245,241,232,.82);padding:4px 7px;backdrop-filter:blur(2px)}
+
+  /* about */
+  .about{padding:80px 0 88px;border-bottom:1px solid var(--line)}
+  .about .container{display:grid;grid-template-columns:5fr 7fr;gap:72px}
+  .about-quote{font-family:"Noto Serif SC","Songti SC","SimSun",serif;font-size:34px;line-height:1.55;letter-spacing:.04em;margin-top:26px;color:var(--ink)}
+  .about-quote em{font-style:normal;color:var(--accent-ink)}
+  .about-body{padding-top:6px}
+  .about-body p{font-size:16px;line-height:1.95;color:var(--ink-2);max-width:33em;margin-bottom:18px}
+  .tools{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-family:Consolas,monospace;font-size:10.5px;line-height:2;letter-spacing:.06em;color:var(--ink-3)}
+  .tools b{font-weight:400;color:var(--ink-2)}
+  .about-link{display:inline-block;margin-top:22px;font-size:13px;color:var(--ink);border-bottom:1px solid var(--line-strong);padding-bottom:4px}
+  .about-link span{font-family:Consolas,monospace;color:var(--accent-ink);margin-left:8px}
+
+  /* footer */
+  .footer{background:var(--deep);color:var(--on-deep);padding:80px 0 36px}
+  .footer-label{font-family:Consolas,monospace;font-size:10.5px;letter-spacing:.2em;color:var(--on-deep-2)}
+  .footer-email-wrap{position:relative;padding-left:36px;margin-top:24px}
+  .footer-email-wrap::before{content:"";position:absolute;left:0;top:12px;bottom:14px;width:1px;background:rgba(192,91,60,.85)}
+  .footer-email-wrap::after{content:"";position:absolute;left:0;top:12px;width:10px;height:1px;background:rgba(192,91,60,.85)}
+  .footer-email{display:inline-block;font-family:"Noto Serif SC","Songti SC","SimSun",serif;font-size:58px;line-height:1.3;letter-spacing:.02em;border-bottom:1px solid rgba(244,239,229,.28);padding-bottom:8px}
+  .footer-email span{font-family:Consolas,monospace;font-size:28px;color:var(--accent);margin-left:18px;vertical-align:8px}
+  .footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr .9fr;gap:40px;margin-top:58px;padding-top:28px;border-top:1px solid rgba(244,239,229,.16)}
+  .footer-grid h4{font-family:Consolas,monospace;font-size:10px;font-weight:400;letter-spacing:.18em;color:var(--on-deep-2);margin-bottom:12px}
+  .footer-grid a,.footer-grid p{display:block;font-size:12px;line-height:2.15;color:var(--on-deep-2)}
+  .footer-grid .brand-line{font-family:"Noto Serif SC",serif;font-size:19px;letter-spacing:.14em;color:var(--on-deep);margin-bottom:10px}
+  .footer-bottom{display:flex;justify-content:space-between;margin-top:44px;padding-top:18px;border-top:1px solid rgba(244,239,229,.10);font-family:Consolas,monospace;font-size:9.5px;letter-spacing:.1em;color:rgba(189,182,168,.75)}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="#">
+      <span class="brand-mark"></span>
+      <span class="brand-cn">留白集</span>
+      <span class="brand-en">LIUBAI</span>
+    </a>
+    <nav class="nav">
+      <a class="active" href="#">首页</a>
+      <a href="#">作品</a>
+      <a href="#">关于</a>
+      <a href="#">联系</a>
+    </nav>
+    <div class="header-note">AIGC / 2026</div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-left">
+      <div class="spine"></div>
+      <div class="hero-copy">
+        <p class="eyebrow">AIGC PORTFOLIO · 2026</p>
+        <h1>留白</h1>
+        <p class="role">AIGC 创作者 · 视觉设计</p>
+        <p class="tagline">把生成模型当作笔，画一些安静的东西。</p>
+        <div class="actions">
+          <a class="btn-primary" href="#">浏览作品 <span>→</span></a>
+          <a class="btn-text" href="#">关于我 <span>↗</span></a>
+        </div>
+        <div class="hero-meta">
+          <span>杭州</span><span class="dot">/</span><span class="status">开放合作</span><span class="dot">/</span><span>LAST UPDATE 11.09</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <figure class="hero-art">
+        <svg viewBox="0 0 800 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <defs>
+            <linearGradient id="hl-bg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#F1E9DC"/><stop offset=".55" stop-color="#E5DAC9"/><stop offset="1" stop-color="#D8CAB7"/>
+            </linearGradient>
+            <linearGradient id="hl-vase" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#D98562"/><stop offset=".42" stop-color="#C05B3C"/><stop offset=".78" stop-color="#9C4527"/><stop offset="1" stop-color="#71301F"/>
+            </linearGradient>
+            <linearGradient id="hl-light" x1="0" y1="0" x2="1" y2=".8">
+              <stop offset="0" stop-color="#FFFDF7" stop-opacity=".55"/><stop offset="1" stop-color="#FFFDF7" stop-opacity="0"/>
+            </linearGradient>
+            <filter id="hl-soft"><feGaussianBlur stdDeviation="16"/></filter>
+            <filter id="hl-grain">
+              <feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="3" stitchTiles="stitch"/>
+              <feColorMatrix type="saturate" values="0"/>
+              <feComponentTransfer><feFuncA type="linear" slope=".22"/></feComponentTransfer>
+            </filter>
+          </defs>
+          <rect width="800" height="1000" fill="url(#hl-bg)"/>
+          <rect width="800" height="1000" fill="url(#hl-light)"/>
+          <rect x="548" width="252" height="1000" fill="#F5F1E8" opacity=".16"/>
+          <path d="M0 716 C 190 696 520 740 800 706 L800 1000 L0 1000Z" fill="#D5C5B0"/>
+          <path d="M0 790 C 240 772 560 802 800 780 L800 1000 L0 1000Z" fill="#CBB9A2" opacity=".55"/>
+          <ellipse cx="404" cy="792" rx="256" ry="42" fill="#6B5442" opacity=".22" filter="url(#hl-soft)"/>
+          <path d="M342 468 C 333 520 292 558 287 650 C 282 738 330 790 400 790 C 470 790 518 738 513 650 C 508 558 467 520 458 468 L428 468 L428 518 C 428 540 372 540 372 518 L372 468 Z" fill="url(#hl-vase)"/>
+          <path d="M372 468 C 372 500 428 500 428 468" fill="none" stroke="#7A3322" stroke-opacity=".45" stroke-width="2"/>
+          <ellipse cx="352" cy="618" rx="20" ry="72" fill="#F5F1E8" opacity=".17" transform="rotate(-11 352 618)"/>
+          <ellipse cx="448" cy="660" rx="16" ry="58" fill="#3B1E16" opacity=".12" transform="rotate(9 448 660)"/>
+          <path d="M399 505 C 392 438 416 366 468 302 C 497 266 536 240 578 228" fill="none" stroke="#3A362E" stroke-width="3.4" stroke-linecap="round"/>
+          <path d="M446 350 C 432 322 430 294 438 268" fill="none" stroke="#3A362E" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M490 292 C 506 272 526 260 548 254" fill="none" stroke="#3A362E" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M440 266 C 424 240 424 216 436 196 C 456 208 464 232 460 254 Z" fill="#6E6A5F" opacity=".9"/>
+          <path d="M550 252 C 558 228 578 214 600 212 C 600 236 584 254 562 260 Z" fill="#6E6A5F" opacity=".8"/>
+          <path d="M472 322 C 456 310 448 290 450 270 C 470 276 482 294 482 314 Z" fill="#8A8274" opacity=".75"/>
+          <line x1="72" y1="84" x2="72" y2="208" stroke="#1D1C19" stroke-opacity=".28"/>
+          <line x1="72" y1="84" x2="81" y2="84" stroke="#C05B3C"/>
+          <text x="92" y="92" font-family="Consolas, monospace" font-size="10" letter-spacing="2.2" fill="#56534B">STILL LIFE / 2026</text>
+          <rect width="800" height="1000" filter="url(#hl-grain)" opacity=".2"/>
+        </svg>
+      </figure>
+      <figcaption class="hero-caption"><span>工作室 · 静物</span><span class="accent">2026 / HANGZHOU</span></figcaption>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div class="head-left"><span class="section-index">01</span><h2>目录</h2></div>
+      <div class="section-note">六种媒介 / 按作品数排序</div>
+    </div>
+    <div class="dir-list">
+      <a class="dir-row" href="#"><span class="num">01</span><span class="name">AI 原画</span><span class="desc">图像、材质与光的实验</span><span class="count">16</span><span class="arrow">→</span></a>
+      <a class="dir-row" href="#"><span class="num">02</span><span class="name">AI 视频</span><span class="desc">短片与动态叙事</span><span class="count">08</span><span class="arrow">→</span></a>
+      <a class="dir-row" href="#"><span class="num">03</span><span class="name">AI 小说</span><span class="desc">连载、短篇与世界观</span><span class="count">10</span><span class="arrow">→</span></a>
+      <a class="dir-row" href="#"><span class="num">04</span><span class="name">AI 音乐</span><span class="desc">配乐与声音设计</span><span class="count">04</span><span class="arrow">→</span></a>
+      <a class="dir-row" href="#"><span class="num">05</span><span class="name">AI 应用</span><span class="desc">可交互的小工具</span><span class="count">02</span><span class="arrow">→</span></a>
+      <a class="dir-row" href="#"><span class="num">06</span><span class="name">AI 智能体</span><span class="desc">角色、流程与工作流</span><span class="count">02</span><span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="featured">
+  <div class="container">
+    <div class="section-head">
+      <div class="head-left"><span class="section-index">02</span><h2>精选</h2></div>
+      <a class="all-link" href="#">全部作品 · 42 件 →</a>
+    </div>
+    <div class="feature-grid">
+      <article class="work work-large">
+        <span class="work-no">01 / 03</span>
+        <div class="work-media">
+          <svg viewBox="0 0 900 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <defs>
+              <linearGradient id="t-sky" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#EFE6D7"/><stop offset=".55" stop-color="#E3D4C0"/><stop offset="1" stop-color="#D3BEAA"/>
+              </linearGradient>
+              <filter id="t-grain">
+                <feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="3" stitchTiles="stitch"/>
+                <feColorMatrix type="saturate" values="0"/>
+                <feComponentTransfer><feFuncA type="linear" slope=".2"/></feComponentTransfer>
+              </filter>
+            </defs>
+            <rect width="900" height="1000" fill="url(#t-sky)"/>
+            <circle cx="648" cy="212" r="96" fill="#C05B3C"/>
+            <circle cx="648" cy="212" r="142" fill="none" stroke="#C05B3C" stroke-opacity=".32"/>
+            <circle cx="648" cy="212" r="188" fill="none" stroke="#C05B3C" stroke-opacity=".14"/>
+            <path d="M0 452 C 130 426 270 470 414 446 C 560 422 720 400 900 438 L900 1000 L0 1000Z" fill="#D08A6B" opacity=".72"/>
+            <path d="M0 528 C 154 498 300 546 456 516 C 620 484 760 476 900 506 L900 1000 L0 1000Z" fill="#BE6B4E" opacity=".9"/>
+            <path d="M0 610 C 180 580 320 626 486 596 C 640 568 786 556 900 586 L900 1000 L0 1000Z" fill="#9C4527"/>
+            <path d="M0 700 C 170 666 330 716 500 684 C 660 654 790 650 900 676 L900 1000 L0 1000Z" fill="#71402F"/>
+            <path d="M0 802 C 190 770 360 816 540 786 C 700 760 812 760 900 782 L900 1000 L0 1000Z" fill="#3A3028"/>
+            <path d="M0 900 C 210 870 380 910 570 888 C 720 870 820 872 900 888 L900 1000 L0 1000Z" fill="#26221C"/>
+            <path d="M0 452 C 130 426 270 470 414 446 C 560 422 720 400 900 438" fill="none" stroke="#F5F1E8" stroke-opacity=".38" stroke-width="1.2"/>
+            <path d="M0 528 C 154 498 300 546 456 516 C 620 484 760 476 900 506" fill="none" stroke="#F5F1E8" stroke-opacity=".26" stroke-width="1"/>
+            <path d="M0 610 C 180 580 320 626 486 596 C 640 568 786 556 900 586" fill="none" stroke="#F5F1E8" stroke-opacity=".18" stroke-width="1"/>
+            <path d="M0 700 C 170 666 330 716 500 684 C 660 654 790 650 900 676" fill="none" stroke="#F5F1E8" stroke-opacity=".12" stroke-width="1"/>
+            <line x1="126" y1="0" x2="126" y2="452" stroke="#F5F1E8" stroke-opacity=".24"/>
+            <rect width="900" height="1000" filter="url(#t-grain)" opacity=".18"/>
+          </svg>
+        </div>
+        <div class="work-info">
+          <h3 class="work-title">潮汐</h3>
+          <span class="work-arrow">↗</span>
+          <p class="work-meta">AI 原画 · 2026 · 16:9</p>
+        </div>
+      </article>
+
+      <article class="work work-small">
+        <span class="work-no">02 / 03</span>
+        <div class="work-media">
+          <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <defs>
+              <linearGradient id="n-bg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#2C2923"/><stop offset="1" stop-color="#1B1916"/>
+              </linearGradient>
+              <filter id="n-grain">
+                <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="3" stitchTiles="stitch"/>
+                <feColorMatrix type="saturate" values="0"/>
+                <feComponentTransfer><feFuncA type="linear" slope=".18"/></feComponentTransfer>
+              </filter>
+            </defs>
+            <rect width="800" height="600" fill="url(#n-bg)"/>
+            <circle cx="585" cy="168" r="76" fill="#EFE7D9" opacity=".94"/>
+            <circle cx="585" cy="168" r="104" fill="none" stroke="#EFE7D9" stroke-opacity=".12"/>
+            <path d="M-40 540 C 180 468 332 470 512 372 C 626 308 710 250 840 220" fill="none" stroke="#C05B3C" stroke-width="1.4" opacity=".85"/>
+            <path d="M-40 590 C 200 520 360 512 540 420 C 650 362 740 310 860 286" fill="none" stroke="#C05B3C" stroke-width="1" opacity=".45"/>
+            <path d="M-40 488 C 180 420 340 430 500 340 C 620 272 700 220 820 196" fill="none" stroke="#F5F1E8" stroke-width=".8" opacity=".25"/>
+            <path d="M0 506 L800 506" stroke="#3A362E" stroke-width="1"/>
+            <path d="M0 520 L800 520" stroke="#3A362E" stroke-width="1" opacity=".7"/>
+            <g fill="#EFE7D9" opacity=".7">
+              <circle cx="130" cy="120" r="1.4"/><circle cx="198" cy="88" r="1"/><circle cx="260" cy="154" r="1.2"/>
+              <circle cx="340" cy="96" r="1"/><circle cx="410" cy="146" r="1.3"/><circle cx="472" cy="72" r="1"/>
+            </g>
+            <rect width="800" height="600" filter="url(#n-grain)" opacity=".22"/>
+          </svg>
+        </div>
+        <div class="work-info">
+          <h3 class="work-title">夜航</h3>
+          <span class="work-arrow">↗</span>
+          <p class="work-meta">AI 视频 · 2026 · 04:12</p>
+        </div>
+      </article>
+
+      <article class="work work-small">
+        <span class="work-no">03 / 03</span>
+        <div class="work-media">
+          <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <defs>
+              <pattern id="p-grid" width="44" height="44" patternUnits="userSpaceOnUse">
+                <path d="M44 0H0V44" fill="none" stroke="#D9D1C2" stroke-width="1"/>
+              </pattern>
+              <filter id="p-grain">
+                <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="3" stitchTiles="stitch"/>
+                <feColorMatrix type="saturate" values="0"/>
+                <feComponentTransfer><feFuncA type="linear" slope=".15"/></feComponentTransfer>
+              </filter>
+            </defs>
+            <rect width="800" height="600" fill="#F5F1E8"/>
+            <rect width="800" height="600" fill="url(#p-grid)" opacity=".72"/>
+            <path d="M0 448 L242 318 L436 396 L648 282 L800 348 L800 600 L0 600Z" fill="#E9E0D1"/>
+            <path d="M0 504 L268 388 L470 458 L676 354 L800 402 L800 600 L0 600Z" fill="#DCCFBD"/>
+            <path d="M268 388 L470 458 L470 600 L268 600Z" fill="#CFC0AA" opacity=".62"/>
+            <path d="M470 458 L676 354 L676 600 L470 600Z" fill="#C5B49E" opacity=".45"/>
+            <path d="M268 388 L470 458 L676 354" fill="none" stroke="#C05B3C" stroke-width="1.6" opacity=".9"/>
+            <path d="M0 504 L268 388" fill="none" stroke="#F5F1E8" stroke-width="1.2" opacity=".8"/>
+            <circle cx="650" cy="132" r="48" fill="#C05B3C" opacity=".9"/>
+            <line x1="72" y1="72" x2="72" y2="182" stroke="#1D1C19" stroke-opacity=".32"/>
+            <line x1="72" y1="72" x2="82" y2="72" stroke="#C05B3C"/>
+            <text x="94" y="80" font-family="Consolas, monospace" font-size="9" letter-spacing="2" fill="#6E6A5F">PAPER SEA / 2025</text>
+            <rect width="800" height="600" filter="url(#p-grain)" opacity=".18"/>
+          </svg>
+        </div>
+        <div class="work-info">
+          <h3 class="work-title">纸上的海</h3>
+          <span class="work-arrow">↗</span>
+          <p class="work-meta">AI 小说 · 2025 · 中篇</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="about">
+  <div class="container">
+    <div class="about-left">
+      <div class="head-left"><span class="section-index">03</span><h2>关于</h2></div>
+      <p class="about-quote">先有作品，<br>再有说明。</p>
+    </div>
+    <div class="about-body">
+      <p>我是留白，一名 AIGC 创作者。用生成模型做图像、影像和文字，也做一些能跑起来的小工具。</p>
+      <p>这里按媒介陈列作品，保留过程、提示词和失败稿。它们不是终点，只是某一刻的切片。</p>
+      <div class="tools"><b>常用工具</b> / Midjourney · ComfyUI · Runway · Suno · Cursor</div>
+      <a class="about-link" href="#">更多关于我 <span>→</span></a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-label">有一个想法，或只是想聊聊</div>
+    <div class="footer-email-wrap">
+      <a class="footer-email" href="#">hello@liubai.studio<span>↗</span></a>
+    </div>
+    <div class="footer-grid">
+      <div>
+        <div class="brand-line">留白集</div>
+        <p>一个人的 AIGC 作品集。<br>杭州 · 中国</p>
+      </div>
+      <div>
+        <h4>目录</h4>
+        <a href="#">AI 原画</a>
+        <a href="#">AI 视频</a>
+        <a href="#">AI 小说</a>
+        <a href="#">AI 音乐</a>
+      </div>
+      <div>
+        <h4>站点</h4>
+        <a href="#">全部作品</a>
+        <a href="#">关于</a>
+        <a href="#">联系</a>
+        <a href="#">管理入口</a>
+      </div>
+      <div>
+        <h4>关注</h4>
+        <a href="#">Instagram</a>
+        <a href="#">小红书</a>
+        <a href="#">Bilibili</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 留白集 / LIUBAI</span>
+      <span>浙ICP备00000000号</span>
+      <span>DESIGNED ON PAPER</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
